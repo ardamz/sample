@@ -23,7 +23,7 @@ sudo systemctl status apach2e
 ```
 To verify if the Apache server is up and running, i just grab the Public IP address of the server from the AWS EC2 consoloe and put it in the browser and the (default) page below is displayed
 
-![Screenshot](https://github.com/ardamz/pikso/blob/15064f22af26bf2bc552a48788c2dcbc13be787d/LAMP/Ubuntu%20default%20browser%20page.png)
+![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/Ubuntu%20default%20browser%20page.png)
 
 To install a mysql-server which will serve as the database of the stack, run
 
