@@ -6,6 +6,8 @@ To update the OS repositories, run
 ```bash
 sudo apt update
 ```
+![Screenshot] (https://github.com/ardamz/sample/blob/25ff1f80fe2ab8a807ed32d1ecc4616eb313aecc/Update%20package%20manager.png)
+
 To Instal the Apache (web) server, run
 
 ```bash
