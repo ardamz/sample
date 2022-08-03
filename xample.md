@@ -27,6 +27,7 @@ To install a mysql-server which will serve as the database of the stack, run
 ```bash
 sudo apt install mysql-server
 ```
+![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20mysql.png)
 
 To verify mysql-server is running and to change te password for the root user, run
 
@@ -47,9 +48,12 @@ To install PHP and all dependencies for both  mysql and Apache, run
 ```bash
 sudo apt install php libapache2-mod-php php-mysql
 ```
+![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20PHP%20and%20dependecies.png)
 
 And to verify if PHP has installed properly, run the follwing code to check the verson of PHP insatlled
 
 ```bash
 php -v
 ```
+
+![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/verified%20PHP%20installation.png)
