@@ -1,5 +1,5 @@
 # LAMP mean Linux Apache Mysql PHP/Python
- ## I am using an ubuntu OS in a virtual box
+
 
 To update the OS repositories, run
 
@@ -21,6 +21,9 @@ To verify if the apache server is installed and staus, run
 ```bash
 sudo systemctl status apach2e
 ```
+To verify if the Apache server is up and running, i just grab the Public IP address of the server from the AWS EC2 consoloe and put it in the browser and the (default) page below is displayed
+
+![Screenshot](https://github.com/ardamz/pikso/blob/15064f22af26bf2bc552a48788c2dcbc13be787d/LAMP/Ubuntu%20default%20browser%20page.png)
 
 To install a mysql-server which will serve as the database of the stack, run
 
@@ -74,6 +77,13 @@ I created a new configuration file in Apache’s sites-available directory using
 ```bash
 sudo nano /etc/apache2/sites-available/projectlamp.conf
 ```
+
+I also confirmed the creation of the configuration file by running:
+
+```bash
+sudo ls /etc/apache2/sites-available
+```
+
 ![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/projectlamp%20cofig%20file%20confirmed.png)
 
 then i inserted the following text into the configuration file using the NANO text editor
@@ -89,3 +99,34 @@ then i inserted the following text into the configuration file using the NANO te
 </VirtualHost>
 ```
 ![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/using%20nano%20to%20create%20the%20config%20file.png)
+
+I then ran a series of commands to inform apache to:
+1. serve projectlamp using /var/www/projectlampl as its web root directory.
+1. disable the default website that comes installed with Apache.
+1. To make sure your configuration file doesn’t contain syntax errors, and
+1. Finally, reload Apache so these changes take effect.
+
+```bash
+sudo a2ensite projectlamp
+```
+
+```bash
+sudo a2dissite 000-default
+```
+
+```bash
+sudo apache2ctl configtest
+```
+
+```bash
+sudo systemctl reload apache2
+```
+
+![Screenshot](https://github.com/ardamz/pikso/blob/15064f22af26bf2bc552a48788c2dcbc13be787d/LAMP/server%20cofigured.png)
+
+I created a simple index.html file to serve as the root of the new website by running:
+
+```bash
+sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
+```
+
