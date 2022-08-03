@@ -14,6 +14,8 @@ To Instal the Apache (web) server, run
 sudo apt install apache2
 ```
 
+![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20apache2.png)
+
 To verify if the apache server is installed and staus, run
 
 ```bash
