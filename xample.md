@@ -1,14 +1,19 @@
-# LAMP mean Linux Apache Mysql PHP/Python
+# LAMP mean Linux Apache Mysql PHP
 
+ ## 1.  **Linux**
 
-To update the OS repositories, run
+> I utilised AWS EC2 as my Linux portion of the stack. I used an Ubuntu server, any Linux distro would equally work.
+
+To update the OS repositories, I ran the following codes
 
 ```bash
 sudo apt update
 ```
 ![Screenshot](https://github.com/ardamz/pikso/blob/138ee8a6bb5d000924c45fad28b4281f1a6d12e2/LAMP/Update%20package%20manager.png)
 
-To Instal the Apache (web) server, run
+## 2. **Apache**
+
+To Install the Apache (web) server, I ran thr following codes
 
 ```bash
 sudo apt install apache2
@@ -25,7 +30,9 @@ To verify if the Apache server is up and running, i just grab the Public IP addr
 
 ![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/Ubuntu%20default%20browser%20page.png)
 
-To install a mysql-server which will serve as the database of the stack, run
+## 3. **Mysql**
+
+To install a mysql-server which will serve as the database of the stack, I ran the following codes
 
 ```bash
 sudo apt install mysql-server
@@ -46,7 +53,8 @@ For additional security config, run the command below, and respond to the prompt
 sudo mysql_secure_installation
 ```
 
-To install PHP and all dependencies for both  mysql and Apache, run
+## 4. **PHP**
+To install PHP and all dependencies for both  mysql and Apache, I ran the following codes
 
 ```bash
 sudo apt install php libapache2-mod-php php-mysql
