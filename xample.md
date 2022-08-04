@@ -26,7 +26,7 @@ And I ran the following code to verify the Apache installation and status
 ```bash
 sudo systemctl status nginx
 ```
-![Screenshot](PROJECT 2: LEMP images/Verify nginx status.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/4d89f68e3290df1e7f542297ee66e59ad113b9d7/PROJECT%202:%20LEMP%20images/verify%20nginx%20install.png)
 
 ![Screenshot](https://github.com/ardamz/PBL/blob/4d89f68e3290df1e7f542297ee66e59ad113b9d7/PROJECT%202:%20LEMP%20images/verify%20nginx%20install.png)
 
