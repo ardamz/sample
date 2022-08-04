@@ -13,7 +13,7 @@ sudo apt update
 
 ## 2. **Apache**
 
-To Install the Apache (web) server, I ran thr following codes
+To Install the Apache (web) server, I ran the following codes
 
 ```bash
 sudo apt install apache2
