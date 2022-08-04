@@ -129,10 +129,35 @@ I created a simple index.html file to serve as the root of the new website by ru
 ```bash
 sudo echo 'Hello LAMP from hostname' 
 $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 
-'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) 
-> /var/www/projectlamp/index.html
+'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
 ```
 
 I then verified if the websites are served by the new web directory by inpuuting the Public IP address in a browser, and the result was the page below, which is a graphical representaion of the simple index.html that was written. 
 
 ![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/projectlamp%20webpage.png)
+
+tToo test the PHP on the website, i changed the order of the PHP configuration file by editing the file using the Vim text editor:
+
+```bash
+sudo vim /etc/apache2/mods-enabled/dir.conf
+```
+
+![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/apache2%20defaults%20altered.png)
+
+Then i ran the following codes to 
+1. reload the Apache server and 
+```bash
+sudo systemctl reload apache2
+```
+2. create a new file named index.php inside your custom web root folder.
+```bash
+vim /var/www/projectlamp/index.php
+```
+3. populate the file above with a simple and valid php code
+```bash
+<?php
+phpinfo();
+```
+I then refreshed the website in my browser, and i got page below which provides information about the  server from the perspective of PHP
+
+![Screenshot](https://github.com/ardamz/pikso/blob/95107fada8a585ba1c57b753179c59f1b3e08009/LAMP/PHP%20verified.png)
