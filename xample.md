@@ -28,8 +28,7 @@ sudo systemctl status nginx
 ```
 ![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/verify%20nginx%20install.png)
 
-
-<!--[Screenshot](https://github.com/ardamz/PBL/blob/4d89f68e3290df1e7f542297ee66e59ad113b9d7/PROJECT%202:%20LEMP%20images/verify%20nginx%20install.png)!-->
+![Screenshot](https://github.com/ardamz/PBL/blob/4d89f68e3290df1e7f542297ee66e59ad113b9d7/PROJECT%202:%20LEMP%20images/verify%20nginx%20install.png)
 
 To verify if the nginx server is up and running, i just grabbed the Public IP address of the Linux system from the AWS EC2 consoloe and put it in the browser and the (default) page below is displayed
 
@@ -104,7 +103,7 @@ sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
 ```bash
 sudo nginx -t
 ```
->This should return a "...syntax is ok" message if all went weel.
+>This should return a "...syntax is ok" message if all went well.
 ```bash
 sudo unlink /etc/nginx/sites-enabled/default
 ```
@@ -114,84 +113,42 @@ sudo systemctl reload nginx
 
 ![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/codess.png)
 
-then i inserted the following text into the configuration file using the NANO text editor
-
-```bash
-<VirtualHost *:80>
-    ServerName projectlamp
-    ServerAlias www.projectlamp 
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/projectlamp
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/using%20nano%20to%20create%20the%20config%20file.png)
-
-I then ran a series of commands to inform apache to:
-1. serve projectlamp using /var/www/projectlampl as its web root directory.
-1. disable the default website that comes installed with Apache.
-1. To make sure your configuration file doesn’t contain syntax errors, and
-1. Finally, reload Apache so these changes take effect.
-
-```bash
-sudo a2ensite projectlamp
-```
-
-```bash
-sudo a2dissite 000-default
-```
-
-```bash
-sudo apache2ctl configtest
-```
-
-```bash
-sudo systemctl reload apache2
-```
-
-![Screenshot](https://github.com/ardamz/pikso/blob/15064f22af26bf2bc552a48788c2dcbc13be787d/LAMP/server%20cofigured.png)
-
 I created a simple index.html file to serve as the root of the new website by running:
 
 ```bash
-sudo echo 'Hello LAMP from hostname' 
-$(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 
-'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
+sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlemp/index.html
+
 ```
 
 I then verified if the websites are served by the new web directory by inpuuting the Public IP address in a browser, and the result was the page below, which is a graphical representaion of the simple index.html that was written. 
 
-![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/projectlamp%20webpage.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/LEMP%20nginx%20webpage.png) 
 
-tToo test the PHP on the website, i changed the order of the PHP configuration file by editing the file using the Vim text editor:
+>This shows that websites are being served by the preojectlemp web root directory.
+
+To test if the nginx can correctly serve .php files, I created a test PHP file in the document root,
 
 ```bash
-sudo vim /etc/apache2/mods-enabled/dir.conf
+sudo nano /var/www/projectLEMP/info.php
 ```
+and inserting the following text into the file.
 
-![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/apache2%20defaults%20altered.png)
-
-Then i ran the following codes to 
-1. reload the Apache server and 
-```bash
-sudo systemctl reload apache2
-```
-2. create a new file named index.php inside your custom web root folder.
-```bash
-vim /var/www/projectlamp/index.php
-```
-3. populate the file above with a simple and valid php code
 ```bash
 <?php
 phpinfo();
 ```
-I then refreshed the website in my browser, and i got page below which provides information about the  server from the perspective of PHP
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/PHP%20info%20file.png) 
 
-![Screenshot](https://github.com/ardamz/pikso/blob/95107fada8a585ba1c57b753179c59f1b3e08009/LAMP/PHP%20verified.png)
+To verify this, I added the  __*/info.php*__ suffix to the Public IP address of the Linux system.
 
- I ran the command below to remove the created php file as it contains sensitive information, and it can easily be recreated in the future if needed.
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/PHP.%20verfied.png) 
 
- ```bash
-sudo rm /var/www/projectlamp/index.php
- ```
+>The result is a web page containing detailed information about the server as shown above.
+
+As the page generated contains sensitive information about the PHP server, it was deleted after reviewing the information on it by running the command below.
+
+
+```bash
+sudo rm /var/www/your_domain/info.php
+```
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/more%20codes.png) 
