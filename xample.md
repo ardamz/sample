@@ -161,3 +161,9 @@ phpinfo();
 I then refreshed the website in my browser, and i got page below which provides information about the  server from the perspective of PHP
 
 ![Screenshot](https://github.com/ardamz/pikso/blob/95107fada8a585ba1c57b753179c59f1b3e08009/LAMP/PHP%20verified.png)
+
+ I ran the command below to remove the created php file as it contains sensitive information, and it can easily be recreated in the future if needed.
+
+ ```bash
+sudo rm /var/www/projectlamp/index.php
+ ```
