@@ -1,4 +1,4 @@
-# LAMP mean Linux Apache Mysql PHP
+# LEMP means NGINX Mysql PHP
 
  ## 1.  **Linux**
 
@@ -9,26 +9,30 @@ To update the OS repositories, I ran the following codes
 ```bash
 sudo apt update
 ```
-![Screenshot](https://github.com/ardamz/pikso/blob/138ee8a6bb5d000924c45fad28b4281f1a6d12e2/LAMP/Update%20package%20manager.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/8e3fae5a1c536d9bba46c3ca21d7e792d4cf76d4/PROJECT%202:%20LEMP%20images/Update.png)
 
-## 2. **Apache**
+## 2. **Nginx**
 
-To Install the Apache (web) server, I ran the following codes
+To Install the nginx (web) server, I ran the following codes
 
 ```bash
-sudo apt install apache2
+sudo apt install nginx
 ```
 
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20apache2.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/8e3fae5a1c536d9bba46c3ca21d7e792d4cf76d4/PROJECT%202:%20LEMP%20images/Install%20nginx.png)
 
 And I ran the following code to verify the Apache installation and status
 
 ```bash
-sudo systemctl status apach2e
+sudo systemctl status nginx
 ```
-To verify if the Apache server is up and running, i just grab the Public IP address of the server from the AWS EC2 consoloe and put it in the browser and the (default) page below is displayed
+![Screenshot](PROJECT 2: LEMP images/Verify nginx status.png)
 
-![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/Ubuntu%20default%20browser%20page.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/4d89f68e3290df1e7f542297ee66e59ad113b9d7/PROJECT%202:%20LEMP%20images/verify%20nginx%20install.png)
+
+To verify if the nginx server is up and running, i just grabbed the Public IP address of the Linux system from the AWS EC2 consoloe and put it in the browser and the (default) page below is displayed
+
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/verify%20nginx%20working.png)
 
 ## 3. **Mysql**
 
@@ -37,7 +41,7 @@ To install a mysql-server which will serve as the database of the stack, I ran t
 ```bash
 sudo apt install mysql-server
 ```
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20mysql.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/install%20mysql-server%20.png)
 
 To verify mysql-server is running and to change the password for the root user:
 
@@ -46,8 +50,9 @@ sudo mysql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'NEWPASSWORD';
 exit
 ```
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/mysql%20config.png)
 
-For additional security config, run the command below, and respond to the prompts as neccessary
+For additional security config, i ran the command below, and responded to the prompts as neccessary
 
 ```bash
 sudo mysql_secure_installation
@@ -57,42 +62,56 @@ sudo mysql_secure_installation
 To install PHP and all dependencies for both  mysql and Apache, I ran the following codes
 
 ```bash
-sudo apt install php libapache2-mod-php php-mysql
+sudo apt install php-fpm php-mysql
 ```
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20PHP%20and%20dependecies.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/PHP%20Installation.png)
 
-And to verify if PHP has installed properly, run the follwing code to check the verson of PHP insatlled
+And when prompted, I hit the Y button and pressed ENTER to confirm installation.
+
+>I ran a sequence of codes to do the following:
+
+1. create the root web directory for projectlemp.
+2. Change the ownership of the created directory.
+3. Open a new configuration file in Nginx’s sites-available directory using the nano command-line editor.
 
 ```bash
-php -v
-```
-
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/verified%20PHP%20installation.png)
-
-I created the directory for projectlamp and changed the owner by running following commands:
-
-```bash
-sudo mkdir /var/www/projectlamp 
+sudo mkdir /var/www/projectlemp 
 ```
 ```bash
  sudo chown -R $USER:$USER /var/www/projectlamp
 ```
-
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/projectlamp%20dr%20created%20ownership%20changed.png)
-
-I created a new configuration file in Apache’s sites-available directory using NANO:
-
 ```bash
 sudo nano /etc/apache2/sites-available/projectlamp.conf
 ```
 
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/codes.png)
+
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/LEMP%20config%20file.png)
+
+>I also ran another batch of codes to do the following:
+1. Activate my configuration by linking to the config file from Nginx’s sites-enabled directory,
+2. Test my configuration for syntax errors,
+3. Disable default Nginx host that is currently configured to listen on port 80,
+4. Reload Nginx to apply the changes.
+
+
 I also confirmed the creation of the configuration file by running:
 
 ```bash
-sudo ls /etc/apache2/sites-available
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+```
+```bash
+sudo nginx -t
+```
+>This should return a "...syntax is ok" message if all went weel.
+```bash
+sudo unlink /etc/nginx/sites-enabled/default
+```
+```bash
+sudo systemctl reload nginx
 ```
 
-![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/projectlamp%20cofig%20file%20confirmed.png)
+![Screenshot](https://github.com/ardamz/PBL/blob/be1ebed8ae4f7a4720334a7f49e1305326b9eef5/PROJECT%202:%20LEMP%20images/codess.png)
 
 then i inserted the following text into the configuration file using the NANO text editor
 
