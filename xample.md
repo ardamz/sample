@@ -127,6 +127,12 @@ sudo systemctl reload apache2
 I created a simple index.html file to serve as the root of the new website by running:
 
 ```bash
-sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
+sudo echo 'Hello LAMP from hostname' 
+$(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 
+'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) 
+> /var/www/projectlamp/index.html
 ```
 
+I then verified if the websites are served by the new web directory by inpuuting the Public IP address in a browser, and the result was the page below, which is a graphical representaion of the simple index.html that was written. 
+
+![Screenshot](https://github.com/ardamz/pikso/blob/993709479fad15bdd620ea7cab8d4b68b2348696/LAMP/projectlamp%20webpage.png)
