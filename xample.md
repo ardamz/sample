@@ -21,7 +21,7 @@ sudo apt install apache2
 
 ![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20apache2.png)
 
-To verify if the apache server is installed and staus, run
+And I ran the following code to verify the Apache installation and status
 
 ```bash
 sudo systemctl status apach2e
@@ -39,7 +39,7 @@ sudo apt install mysql-server
 ```
 ![Screenshot](https://github.com/ardamz/pikso/blob/778b8556b85d3afe7b32183b4ef5c1912e12f5c2/LAMP/install%20mysql.png)
 
-To verify mysql-server is running and to change te password for the root user, run
+To verify mysql-server is running and to change the password for the root user:
 
 ```bash
 sudo mysql 
