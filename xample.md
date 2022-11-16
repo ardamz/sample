@@ -46,7 +46,7 @@ sudo lvcreate -n logs-lv 14G webdata-vg
 ```
 >apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
 
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/6.%20Project%206%20Web%20Solution%20with%20WordPress/AppLV.png)
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/6.%20Project%206%20Web%20Solution%20with%20WordPress/AppsLV.png)
 > I verified creation LVs by running ` sudo lvs`
 
 8. On the DB Server, I used th `lvcreate` utility to create 2 logical volumes. db-lv (using half of the PV size), and logs-lv using the remaining space of the PV size. 
