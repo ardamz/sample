@@ -29,7 +29,7 @@ sudo lvmdiskscan
 ![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/6.%20Project%206%20Web%20Solution%20with%20WordPress/PhysicalVolumes.png)
 
 
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/6.%20Project%206%20Web%20Solution%20with%20WordPress/SudoPVS.png)
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/6.%20Project%206%20Web%20Solution%20with%20WordPress/SudoPvs.png)
 > I verified creation PVs by running ` sudo pvs`
 
 6.  I used the `vgcreate` utility to add all 3 PVs to a volume group (VG) called `webdata-vg`
