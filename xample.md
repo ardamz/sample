@@ -1,8 +1,68 @@
-# Shell Scripting Project
+# Web Solution With WordPress
 
- ## 1.  **Linux**
+ ## A.  **Preparing The Web Server**
 
-> I utilised AWS EC2 as my server for this project.
+> I utilised AWS EC2 as my server for this project. 
+
+1. I created 3 additional volumes and attched them to the web server.
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Volumes.png)
+
+2. I used the `gdisk` utility to create a single partition on each of the 3 disks for both the Web Server and DB Server.
+ ```bash 
+sudo gdisk /dev/xvdf
+```
+3. I ran the `lsblk` command to view the newly configured partition on each of the 3 disks on both servers.
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/DrivesPartitioned.png)
+
+4. I installed the `lvm2` utility by running;
+```bash
+sudo yum install lvm2
+```
+I then checked for avalable partitons by running;
+```bash 
+sudo lvmdiskscan
+```
+5.  I used the `pvcreate` utility to mark each of 3 disks as physical volumes (PVs) to be used by LVM.
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/PhysicalVolumes.png)
+
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/SudoPVS.png)
+> I verified creation PVs by running ` sudo pvs`
+
+6.  I used the `vgcreate` utility to add all 3 PVs to a volume group (VG) called `webdata-vg`
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/VGCreate.png)
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/SudoVGS.png)
+
+7. On the webserver, I used th `lvcreate` utility to create 2 logical volumes. apps-lv (using half of the PV size), and logs-lv using the remaining space of the PV size. 
+>apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
+
+```bash
+sudo lvcreate -n apps-lv -L 14G webdata-vg
+sudo lvcreate -n logs-lv 14G webdata-vg
+```
+```bash
+sudo lvcreate -n logs-lv -L 14G webdata-vg
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 I created and navigated to the `shell` directory by running the following command
 
@@ -98,12 +158,12 @@ I was able to verify that the script ran successfully by doing any of the follow
 
 ![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/SwitchUser.png)
 
-1. Using the `ls` command to list all the users with an home fo to other users on the server.
+2. Using the `ls` command to list all the users with an home fo to other users on the server.
 
 ![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/UsersHomeDirectory.png)
 
 
-Using the `Santos.pem` file created earlier, i was able to login as various users on the server.
+3. Using the `Santos.pem` file created earlier, i was able to login as various users on the server.
 
 ![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/SSH@Santos.png)
 >SSH as Santos
