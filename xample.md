@@ -37,152 +37,102 @@ sudo lvmdiskscan
 
 ![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/SudoVGS.png)
 
-7. On the webserver, I used th `lvcreate` utility to create 2 logical volumes. apps-lv (using half of the PV size), and logs-lv using the remaining space of the PV size. 
->apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
+7. On the Web Server, I used th `lvcreate` utility to create 2 logical volumes. apps-lv (using half of the PV size), and logs-lv using the remaining space of the PV size. 
 
 ```bash
 sudo lvcreate -n apps-lv -L 14G webdata-vg
 sudo lvcreate -n logs-lv 14G webdata-vg
 ```
-```bash
-sudo lvcreate -n logs-lv -L 14G webdata-vg
-```
+>apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
 
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/AppLV.png)
+> I verified creation LVs by running ` sudo lvs`
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-I created and navigated to the `shell` directory by running the following command
+8. On the DB Server, I used th `lvcreate` utility to create 2 logical volumes. db-lv (using half of the PV size), and logs-lv using the remaining space of the PV size. 
 
 ```bash
-mkdir shell && cd shell
+sudo lvcreate -n db-lv -L 14G webdata-vg
+sudo lvcreate -n logs-lv 14G webdata-vg
 ```
+>apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
 
-I the created and populated a `names.csv` file by running
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/DBlv.png)
+> I verified creation LVs by running ` sudo lvs`
+
+9. I verfied my setup so far by running `sudo lsblk`
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/FinalSetup.png)
+>looking good...
+
+10. using the `mkfs` utility, I formated the Logical Volumes (LVs) on both servers with the ext4 filsesystem.
 
 ```bash
-vim names.csv
+sudo mkfs -t ext4 /dev/webdata-vg/apps-lv
+sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
 ```
 
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/code1.png)
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/FileSystem.png)
+> I swapped `apps-lv` for `db-lv` when runing same command on the DB Server
 
-I then proceeded to create the developers group by running the command below
+11. On the Web Server, using the `mkdir` command I created the `/var/www/html` directory to store website files, and the `/home/recovery/logs` directory to store backup of log data. 
 
 ```bash
-sudo groupadd developers
+sudo mkdir -p /var/www/html
+sudo mkdir -p /home/recovery/logs
 ```
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/WebDirectory.png)
 
-I then navigated to `.ssh` directory by running 
+12. On the DB Server, using the `mkdir` command I created the `/db` directory to store website files, and the `/home/recovery/logs` directory to store backup of log data. 
 
 ```bash
-cd ~/.ssh
+sudo mkdir -p /db
+sudo mkdir -p /home/recovery/logs
 ```
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/DBdirectory.png)
 
-I then created and populated the `id_rsa` and `id_rsa.pub` files by running the `touch` and `vim` command.
-
-I also saved a copy of the private key as `.pem` file locally. This would be used to login as any of the created users using SSH.
+13. On the Web Srver, I mounted the `/var/www/html` directory on the `appls-lv` logical volume by running;
 
 ```bash
-touch id_rsa id_rsa.pub
+sudo mount /dev/webdata-vg/apps-lv /var/www/html/
 ```
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/MountHtml.png)
+
+14. On the DB Srver, I mounted the `/db` directory on the `db-lv` logical volume by running;
 
 ```bash
-vim id_rsa.pub
+sudo mount /dev/webdata-vg/db-lv /db/
 ```
-```bash
-vim id_rsa
-```
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/MountDB.png)
 
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/code2.png)
+15. On both servers, I used `rsync` utility to backup all the files in the log directory `/var/log` into `/home/recovery/logs` (This is required before mounting the file system).
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/rsync.png)
+> sudo rsync -av /var/log/. /home/recovery/logs/
+
+16. I then proceeded to mount `/var/log` on `logs-lv` logical volume. (Note that all the existing data on `/var/log` will be deleted. That is why step 15 above is very
+important).
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Mountlogs.png)
+> sudo mount /dev/webdata-vg/logs-lv /var/log
+
+17. I restored log files back into the `/var/log` directory
+
+![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/restore.png)
+> sudo rsync -av /home/recovery/logs/. /var/log
 
 
- ## 2. **Automation Script**
 
-I navigated back to the `shell` directory and created a shell script called `onboarding.sh`. The script will perform the following tasks;
 
-1. Read the `names.csv` file, create each user on the server, and add to the existing group called `developers`.
 
-1. Check for the existence of the user on the system, before it will attempt to create it.
 
-1. Ensure that the user that is being created also has a default home folder
 
-1. Ensure that each user has a `.ssh` folder within its HOME folder. If it does not exist, it creates one.
 
-1. For each user’s SSH configuration, create an authorized_keys file and  ensure it has the public key of my current user.
 
-```bash
-cd ~/shell
-```
 
-```bash
-vim onboarding.sh
-```
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/Onboarding.sh.png)
 
-I then changed the permission of the `onboarding.sh` file to make it executable by running the `chmod` command, before running the script.
 
-```bash
-chmod +x onboarding.sh
-```
+
 
 ```bash
-./ onboarding.sh
+sudo
 ```
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/code3.png)
-
-
-I was able to get the script to run successfully aftersome initial jitters.
-
-
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/Greeeeen.png)
-> All tasks accomplished by script.
-
-
-## 3. **Random User Credential Testing**
-
-I was able to verify that the script ran successfully by doing any of the following;
-
-1. Using the `su` command to switch to other users on the server.
-
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/SwitchUser.png)
-
-2. Using the `ls` command to list all the users with an home fo to other users on the server.
-
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/UsersHomeDirectory.png)
-
-
-3. Using the `Santos.pem` file created earlier, i was able to login as various users on the server.
-
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/SSH@Santos.png)
->SSH as Santos
-
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/SSH@Yahaya.png)
->SSH  as Yahaya
-
-## 4. **Hiccups**
-
-Everything was going smoothly until i ran my script, and i got a message i wasn't expecting on the screen.
-
-
-
-![Screenshot](https://github.com/ardamz/PersonalDemos/blob/main/Aux_Project_1%20(Shell%20Scripting)/hiccups.png)
-> Last 2 lines were unexpected
-
-Apparently for the fifth task of my script, the public was in my `~/.ssh` directory, but the script specified the `~/shell` directory. 
-
-To fix this, i could either edit the script to change the location of the public key or copy the public key to the shell directory, I went for the latter.
-
-
-
