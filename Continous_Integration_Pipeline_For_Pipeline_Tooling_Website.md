@@ -66,8 +66,6 @@ then i installed plugins, created an admin user and was done with the inital set
 
 
 
-
-
 ```bash
 sudo umount -l /var/log/httpd
 ```
